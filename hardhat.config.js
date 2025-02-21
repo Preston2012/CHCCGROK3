@@ -60,12 +60,12 @@ module.exports = {
 
     "base-sepolia": {
       url: 'https://sepolia.base.org',
-      accounts: [ env.ACCOUNTS.xxx.PK ],
+      accounts: [ env.ACCOUNTS.WALLET.PK ],
       // gasPrice: 100_000_000,
     },
     "base-mainnet": {
       url: 'https://mainnet.base.org',
-      accounts: [ env.ACCOUNTS.xxx.PK ],
+      accounts: [ env.ACCOUNTS.WALLET.PK ],
       // gasPrice: 100_000_000,
     },
 
@@ -74,7 +74,7 @@ module.exports = {
       chainId:  81457,
       url: `https://rpc.blast.io`,
       accounts: [
-        env.ACCOUNTS.xxx.PK,
+        env.ACCOUNTS.WALLET.PK,
       ]
     },
     "blast-sepolia": {
@@ -82,7 +82,7 @@ module.exports = {
       chainId: 168587773,
       url: `https://sepolia.blast.io`,
       accounts: [
-        env.ACCOUNTS.xxx.PK,
+        env.ACCOUNTS.WALLET.PK,
       ]
     },
 
@@ -94,7 +94,7 @@ module.exports = {
     sepolia: {
       url: `https://sepolia.infura.io/v3/${env.INFURA.PROJECT_ID}`,
       accounts: [
-        env.ACCOUNTS.SQUEEBO_2.PK,
+        env.ACCOUNTS.WALLET.PK,
         // ...accounts.slice(2).map(acct => acct.privateKey)
       ],
       // gasPrice: 65_000_000_000,

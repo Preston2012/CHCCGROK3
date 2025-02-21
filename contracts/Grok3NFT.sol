@@ -13,14 +13,18 @@ pragma solidity ^0.8.0;
  *      This contract is a tribute to their influence as we build a groundbreaking NFT ecosystem!
  */
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/interfaces/IERC2981.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+import {IERC165, IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import {IERC2981} from "@openzeppelin/contracts/interfaces/IERC2981.sol";
+
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
+// import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20, SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {ERC721, ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract Grok3NFT is ERC721Enumerable, Ownable, IERC2981, ReentrancyGuard {
     using Strings for uint256;
@@ -106,9 +110,12 @@ contract Grok3NFT is ERC721Enumerable, Ownable, IERC2981, ReentrancyGuard {
     }
 
     function stake(uint256 _tokenId, uint256 _hornetId, uint256 _animusId) external {
-        require(ownerOf(_tokenId) == msg.sender, "Not the owner of the Grok3NFT");
+        address _owner = ownerOf(_tokenId);
+        require(_owner == msg.sender, "Not the owner of the Grok3NFT");
         require(stakedTimestamp[_tokenId] == 0, "Already staked");
-        require(isApprovedOrOwner(msg.sender, _tokenId), "Not approved to transfer");
+
+        _checkAuthorized(_owner, msg.sender, _tokenId);
+        // require(_checkAuthorized(_owner, msg.sender, _tokenId), "Not approved to transfer");
 
         stakedTimestamp[_tokenId] = block.timestamp;
         _transfer(msg.sender, address(this), _tokenId);
@@ -251,7 +258,9 @@ contract Grok3NFT is ERC721Enumerable, Ownable, IERC2981, ReentrancyGuard {
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        require(_exists(tokenId), "Token does not exist");
+        address _owner = ownerOf(tokenId);
+        require(_owner != address(0), "Token does not exist");
+
         string memory level = traitLevel[tokenId] > 0 ? string(abi.encodePacked("_level", traitLevel[tokenId].toString())) : "";
         string memory boost = pairedHornet[tokenId] != 0 ? "_hivemind" : "";
         string memory villain = pairedAnimus[tokenId] != 0 ? "_villain" : "";
@@ -265,7 +274,8 @@ contract Grok3NFT is ERC721Enumerable, Ownable, IERC2981, ReentrancyGuard {
         override
         returns (address receiver, uint256 royaltyAmount)
     {
-        require(_exists(_tokenId), "Token does not exist");
+        address _owner = ownerOf(_tokenId);
+        require(_owner != address(0), "Token does not exist");
         receiver = royaltyReceiver;
         royaltyAmount = (_salePrice * ROYALTY_BASIS_POINTS) / 10000;
     }
