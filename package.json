@@ -1,0 +1,56 @@
+{
+  "name": "hardhat-template",
+  "author": "Squeebo",
+  "description": "",
+  "license": "BSD-3-Clause",
+  "version": "1.0.0",
+  "scripts": {
+    "compile": "yarn --offline hardhat compile",
+    "deploy": "yarn --offline truffle deploy",
+    "prettier": "npx prettier --write 'contracts/**/*.sol'",
+    "test": "yarn --offline hardhat test",
+    "truffle-compile": "yarn --offline hardhat compile",
+    "truffle-deploy": "yarn --offline truffle deploy",
+    "truffle-verify": "yarn --offline truffle run verify",
+    "___ContractName___": "--network rinkeby",
+    "___tasks___": "___tasks___",
+    "impAndEx": "hardhat task impAndEx --impersonate @0",
+    "setBalance": "hardhat task setBalance --impersonate @0",
+    "transferFrom": "hardhat task transferFrom --contract @0 --to @1 --token @2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.1",
+    "@openzeppelin/contracts-upgradeable": "^5.0.0",
+    "@openzeppelin-4.4.0/contracts": "npm:@openzeppelin/contracts@4.4.0",
+    "@uniswap/v2-core": "^1.0.1",
+    "erc721a": "^4.3.0",
+    "erc721a-upgradeable": "chiru-labs/ERC721A-Upgradeable",
+    "operator-filter-registry": "^1.3.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.0.5",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-truffle5": "^2.0.7",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "@truffle/hdwallet-provider": "^1.5.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.19.5",
+    "hardhat-contract-sizer": "^2.10.0",
+    "hardhat-gas-reporter": "^1.0.4",
+    "keccak256": "^1.0.6",
+    "log4js": "^6.9.1",
+    "merkletreejs": "^0.3.11",
+    "prettier": "^3.2.5",
+    "prettier-plugin-solidity": "^1.3.1",
+    "truffle": "^5.11.5",
+    "truffle-plugin-verify": "^0.6.7"
+  },
+  "lint-staged": {
+    "*.sol": [
+      "prettier --write"
+    ]
+  }
+}

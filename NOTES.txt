@@ -1,0 +1,12 @@
+
+npx hardhat compile
+npx hardhat test
+npx hardhat coverage
+
+yarn hardhat compile
+yarn hardhat test ./test/test-contract.js
+yarn hardhat run ./scripts/deploy.js --network mainnet
+yarn hardhat verify --network mainnet 0x...
+
+yarn truffle deploy --network mumbai --contract=xxx
+yarn truffle run verify xxx --network mumbai
